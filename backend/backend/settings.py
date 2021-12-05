@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'notifications',
     'trades',
     'users',
+    'mapbox_location_field',
+    'django_resized',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +139,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MAPBOX_KEY = env('MAP_KEY')

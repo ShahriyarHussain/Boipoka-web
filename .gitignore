@@ -1,6 +1,6 @@
 #ignoring environment variables file
 backend/backend/.env
-
+backend/secure-key.pub
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
