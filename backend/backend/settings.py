@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 import environ
+import psycopg2.extensions
 
 
 env = environ.Env()
@@ -48,7 +50,6 @@ INSTALLED_APPS = [
     'trades',
     'users',
     'mapbox_location_field',
-    'django_resized',
 ]
 
 MIDDLEWARE = [
@@ -132,12 +133,20 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = ''
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MAPBOX_KEY = env('MAP_KEY')
+MAPBOX_KEY = env('MAP_KEY2')
+
+DJANGORESIZED_DEFAULT_SIZE = [1280, 720]
+DJANGORESIZED_DEFAULT_QUALITY = 75
+DJANGORESIZED_DEFAULT_KEEP_META = False
+DJANGORESIZED_DEFAULT_FORCE_FORMAT = 'PNG'
+DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {'PNG': ".png"}
+DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False

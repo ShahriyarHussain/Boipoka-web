@@ -1,14 +1,12 @@
-from enum import unique
-from django.db import models
 from django.contrib.auth.models import User
-from PIL import Image
+from django.db import models
 from mapbox_location_field.models import LocationField
-from django_resized import ResizedImageField
+from django.utils import timezone
+from PIL import Image
 # from django.core.validators import RegexValidator
 
 default_map_attrs = {
     "style": "mapbox://styles/mapbox/outdoors-v11",
-
     "cursor_style": 'pointer',
     "marker_color": "red",
     "rotate": False,
@@ -25,18 +23,63 @@ default_map_attrs = {
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, primary_key=True)
     phone = models.CharField(max_length=11, null=False,
                              blank=False, unique=True)
-    image = ResizedImageField(
-        size=[300, 300], upload_to='profile_images', blank=True, default='default.jpg')
+    image = models.ImageField(
+        upload_to='profile_images', blank=True, default='default.png')
+
     days_logged_id = models.IntegerField(default=0, null=False)
     favorite_genre = models.CharField(max_length=15)
-    location = LocationField(map_attrs={"zoom": 13, "center": [
-                             23.78080079103708, 90.4077459260738]})
+    location = LocationField(default=[23.78091, 90.40756])
+    user_reports = models.ManyToManyField(
+        'self', related_name='report', through='Reports')
+    user_reviews = models.ManyToManyField(
+        'self', related_name='review', through='Reviews')
+    user_messages = models.ManyToManyField(
+        'self', related_name='send_message', through='Messages')
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f'{self.user.username}\'s Profile'
 
-    def save(self, *args, **kwargs):
-        super().save()
+    # def save(self, *args, **kwargs):
+    #     super().save()
+
+
+class Reports(models.Model):
+    report_sender = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='report_sender')
+    report_receiver = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='report_receiver')
+    description = models.CharField(max_length=500, blank=False)
+    time = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.report_sender.username}-{self.report_receiver.username} report'
+
+
+class Reviews(models.Model):
+    review_sender = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='review_sender')
+    review_receiver = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='review_reciever')
+    rating = models.IntegerField(blank=False)
+    time = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.reivew_sender.username}-{self.review_receiver.username} review'
+
+
+class Messages(models.Model):
+    sender = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='message_sender')
+    receiver = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='message_receiver')
+    content = models.CharField(blank=False, max_length=500)
+    time = models.DateTimeField(default=timezone.now)
+    attachment = models.FileField(
+        upload_to='chat_uploads/%Y/%m/%d/%h/%m/%s/', max_length=400)
+
+    def __str__(self):
+        return f'{self.sender.username}-{self.receiver.username} messages'
