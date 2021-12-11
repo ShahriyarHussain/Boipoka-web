@@ -1,3 +1,4 @@
+from os import posix_fadvise
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -5,16 +6,26 @@ from PIL import Image
 
 # Create your models here.
 
+post_type = [
+    ('Sale', 'Is Having A Sale'),
+    ('Giveaway', 'Is Performing A Giveaway'),
+    ('Post Share', 'Shared A Post!'),
+    ('Book Review', 'Has Shared A Book Review!'),
+    ('Reading New Book', 'Is Reading A New Book!'),
+]
+
 
 class Post(models.Model):
     content = models.CharField(max_length=1000, blank=False)
     image = models.ImageField(upload_to='post_images',
                               blank=True, default='default.jpg')
-    date_posted = models.DateTimeField(default=timezone.now)
+    date_posted = models.DateTimeField(default=timezone.now, blank=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, related_name='likes')
     comments = models.ManyToManyField(
         User, related_name='comments', through='Post_Comment')
+    post_type = models.CharField(
+        max_length=30, blank=False, default='Shared A Post', choices=post_type)
 
     def __str__(self):
         return f'{self.author.username} post'

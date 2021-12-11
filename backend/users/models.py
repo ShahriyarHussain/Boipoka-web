@@ -1,8 +1,10 @@
+from typing import Tuple
 from django.contrib.auth.models import User
 from django.db import models
 from mapbox_location_field.models import LocationField
 from django.utils import timezone
 from PIL import Image
+from trades.models import genres
 # from django.core.validators import RegexValidator
 
 default_map_attrs = {
@@ -22,6 +24,19 @@ default_map_attrs = {
 # Create your models here.
 
 
+profile_genres = [
+    ('Fantasy', 'Fantasy'),
+    ('Sci-Fi', 'Sci-Fi'),
+    ('Action & Adventure', 'Action & Adventure'),
+    ('Mystery', 'Mystery'),
+    ('Horror', 'Horror'),
+    ('Thriller', 'Thriller'),
+    ('Romance', 'Romance'),
+    ('Biography', 'Biography'),
+    ('Science & Technology', 'Science & Technology'),
+]
+
+
 class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True)
@@ -30,9 +45,9 @@ class Profile(models.Model):
     image = models.ImageField(
         upload_to='profile_images', blank=True, default='default.png')
 
-    days_logged_id = models.IntegerField(default=0, null=False)
-    favorite_genre = models.CharField(max_length=15)
-    location = LocationField(default=[23.78091, 90.40756])
+    days_logged_id = models.IntegerField(blank=False, default=1)
+    favorite_genre = models.CharField(choices=genres, max_length=20)
+    # location = LocationField(default=[(23.78091, 90.40756)])
     user_reports = models.ManyToManyField(
         'self', related_name='report', through='Reports')
     user_reviews = models.ManyToManyField(
@@ -56,7 +71,7 @@ class Reports(models.Model):
     time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f'{self.report_sender.username}-{self.report_receiver.username} report'
+        return f'{self.report_sender.username} reported {self.report_receiver.username}'
 
 
 class Reviews(models.Model):
@@ -65,10 +80,10 @@ class Reviews(models.Model):
     review_receiver = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='review_reciever')
     rating = models.IntegerField(blank=False)
-    time = models.DateTimeField(default=timezone.now)
+    time = models.DateTimeField(blank=False, default=timezone.now)
 
     def __str__(self):
-        return f'{self.reivew_sender.username}-{self.review_receiver.username} review'
+        return f'{self.reivew_sender.username} reviewed {self.review_receiver.username}'
 
 
 class Messages(models.Model):
@@ -77,9 +92,9 @@ class Messages(models.Model):
     receiver = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='message_receiver')
     content = models.CharField(blank=False, max_length=500)
-    time = models.DateTimeField(default=timezone.now)
-    attachment = models.FileField(
-        upload_to='chat_uploads/%Y/%m/%d/%h/%m/%s/', max_length=400)
+    time = models.DateTimeField(blank=False, default=timezone.now)
+    attachment = models.ImageField(blank=True,
+                                   upload_to='chat_uploads')
 
     def __str__(self):
-        return f'{self.sender.username}-{self.receiver.username} messages'
+        return f'{self.sender.user.username} messaged {self.receiver.user.username}'

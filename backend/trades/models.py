@@ -6,19 +6,19 @@ from PIL import Image
 # Create your models here.
 
 genres = [
-    (1, 'Fantasy'),
-    (2, 'Sci-Fi'),
-    (3, 'Action & Adventure'),
-    (4, 'Mystery'),
-    (5, 'Horror'),
-    (6, 'Thriller'),
-    (7, 'Romance'),
-    (8, 'Biography'),
-    (9, 'Science & Technology'),
-    (10, 'Humor'),
-    (11, 'History'),
-    (12, 'Children'),
-    (13, 'Travel'),
+    ('Fantasy', 'Fantasy'),
+    ('Sci-Fi', 'Sci-Fi'),
+    ('Action & Adventure', 'Action & Adventure'),
+    ('Mystery', 'Mystery'),
+    ('Horror', 'Horror'),
+    ('Thriller', 'Thriller'),
+    ('Romance', 'Romance'),
+    ('Biography', 'Biography'),
+    ('Science & Technology', 'Science & Technology'),
+    ('Humor', 'Humor'),
+    ('History', 'History'),
+    ('Children', 'Children'),
+    ('Travel', 'Travel'),
 ]
 
 negotiable_choices = [
@@ -48,12 +48,13 @@ class Author(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=200, blank=False)
-    isbn = models.CharField(unique=True, blank=False, max_length=100)
-    genres = models.IntegerField(choices=genres)
+    title = models.CharField(max_length=200, blank=False, null=False)
+    isbn = models.CharField(unique=True, blank=False,
+                            max_length=100, null=False)
+    genres = models.CharField(max_length=25, choices=genres)
     pages = models.IntegerField(blank=True, null=True)
     edition = models.IntegerField(blank=True, null=True)
-    author = models.ManyToManyField(Author)
+    author = models.ManyToManyField(Author, blank=False)
     image = models.ImageField(upload_to='book_covers',
                               blank=True, default='default.png')
 
@@ -66,7 +67,7 @@ class Book(models.Model):
 
 class Listing(models.Model):
     descriptions = models.CharField(max_length=1000, blank=True)
-    price = models.IntegerField(blank=False)
+    price = models.IntegerField(blank=False, default=0)
     condition = models.IntegerField(choices=condition_choices, blank=False)
     negotiable = models.BooleanField(
         blank=False, choices=negotiable_choices, null=True)
@@ -78,12 +79,13 @@ class Listing(models.Model):
     options = models.ManyToManyField(
         Book, related_name='suggested_books', null=True)
     listed_by = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='adds_listing')
+        User, on_delete=models.CASCADE, related_name='adds_listing', blank=False, null=False)
     wishlisted_by = models.ManyToManyField(
-        User, related_name='wishlists', null=True)
-    viewed_by = models.ManyToManyField(User, related_name='views', null=True)
+        User, related_name='wishlists', blank=True)
+    viewed_by = models.ManyToManyField(
+        User, related_name='views', blank=True)
     trades = models.ManyToManyField(
-        User, related_name='trades', through='Trade')
+        User, related_name='trades', through='Trade', blank=True)
 
     if listing_type:
         options = None
@@ -105,13 +107,14 @@ class Listing_Images(models.Model):
         upload_to='listing_images', blank=True, default='default.png')
 
     def __str__(self):
-        return f'{self.listing.title}\'s image'
+        return f'{self.listing.listed_by}--{self.listing.book.title}\'s listing image'
 
 
 class Trade(models.Model):
     tradee = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='tradee')
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    listing = models.ForeignKey(
+        Listing, on_delete=models.CASCADE, related_name="listing")
     time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -119,10 +122,12 @@ class Trade(models.Model):
 
 
 class Listing_Comments(models.Model):
-    commenter = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    commenter = models.ForeignKey(
+        User, on_delete=models.CASCADE, blank=False, null=True)
+    listing = models.ForeignKey(
+        Listing, on_delete=models.CASCADE, blank=False, null=True)
     comment_date = models.DateTimeField(default=timezone.now)
-    content = models.CharField(max_length=200)
+    content = models.CharField(max_length=200, blank=False)
 
     def __str__(self):
         return f'{self.commenter}\'s comment on {self.listing.listed_by.username}\'s listing'
