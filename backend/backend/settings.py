@@ -50,7 +50,14 @@ INSTALLED_APPS = [
     'trades',
     'users',
     'mapbox_location_field',
+    'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES:' [
+        'rest_framework.permission.AllowAny',
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

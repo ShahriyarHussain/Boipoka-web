@@ -100,7 +100,7 @@ class Listing(models.Model):
     #     super().save
 
 
-class Listing_Images(models.Model):
+class Listing_Image(models.Model):
     listing = models.ForeignKey(
         Listing, on_delete=models.CASCADE)
     image = models.ImageField(
@@ -121,7 +121,7 @@ class Trade(models.Model):
         return f'{self.listing.book.title}|{self.tradee}-{self.listing.listed_by}'
 
 
-class Listing_Comments(models.Model):
+class Listing_Comment(models.Model):
     commenter = models.ForeignKey(
         User, on_delete=models.CASCADE, blank=False, null=True)
     listing = models.ForeignKey(

@@ -49,11 +49,11 @@ class Profile(models.Model):
     favorite_genre = models.CharField(choices=genres, max_length=20)
     # location = LocationField(default=[(23.78091, 90.40756)])
     user_reports = models.ManyToManyField(
-        'self', related_name='report', through='Reports')
+        'self', related_name='report', through='Report')
     user_reviews = models.ManyToManyField(
-        'self', related_name='review', through='Reviews')
+        'self', related_name='review', through='Review')
     user_messages = models.ManyToManyField(
-        'self', related_name='send_message', through='Messages')
+        'self', related_name='send_message', through='Message')
 
     def __str__(self):
         return f'{self.user.username}\'s Profile'
@@ -62,7 +62,7 @@ class Profile(models.Model):
     #     super().save()
 
 
-class Reports(models.Model):
+class Report(models.Model):
     report_sender = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='report_sender')
     report_receiver = models.ForeignKey(
@@ -74,7 +74,7 @@ class Reports(models.Model):
         return f'{self.report_sender.username} reported {self.report_receiver.username}'
 
 
-class Reviews(models.Model):
+class Review(models.Model):
     review_sender = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='review_sender')
     review_receiver = models.ForeignKey(
@@ -86,7 +86,7 @@ class Reviews(models.Model):
         return f'{self.reivew_sender.username} reviewed {self.review_receiver.username}'
 
 
-class Messages(models.Model):
+class Message(models.Model):
     sender = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='message_sender')
     receiver = models.ForeignKey(

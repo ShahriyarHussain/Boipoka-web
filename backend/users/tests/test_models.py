@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
-from .models import Profile, Messages, Reviews, Reports
-
+from backend.users.models import *
 # Create your tests here.
 
 
@@ -21,25 +20,25 @@ class ProfileTestCase(TestCase):
         )
 
 
-class ReportsTestCase(TestCase):
+class ReportTestCase(TestCase):
     def test_user(self):
         self.assertEquals(
-            Reports.objects.count(),
+            Report.objects.count(),
             0
         )
 
 
-class MessagesTestCase(TestCase):
+class MessageTestCase(TestCase):
     def test_user(self):
         self.assertEquals(
-            Messages.objects.count(),
+            Message.objects.count(),
             0
         )
 
 
-class ReviewsTestCase(TestCase):
+class ReviewTestCase(TestCase):
     def test_user(self):
         self.assertEquals(
-            Reviews.objects.count(),
+            Review.objects.count(),
             0
         )
