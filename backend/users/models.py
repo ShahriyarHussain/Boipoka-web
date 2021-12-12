@@ -45,7 +45,7 @@ class Profile(models.Model):
     image = models.ImageField(
         upload_to='profile_images', blank=True, default='default.png')
 
-    days_logged_id = models.IntegerField(blank=False, default=1)
+    days_logged_in = models.IntegerField(blank=False, default=1)
     favorite_genre = models.CharField(choices=genres, max_length=20)
     # location = LocationField(default=[(23.78091, 90.40756)])
     user_reports = models.ManyToManyField(

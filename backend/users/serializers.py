@@ -2,15 +2,29 @@ from django.db.models import fields
 from rest_framework import serializers
 from rest_framework.utils import field_mapping
 from .models import *
+from django.contrib.auth.models import User
 
 
-class ReactSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'username',
+            'email',
+            'is_staff',
+            'is_superuser',
+            'password',
+        )
+
+
+class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = [
+        fields = (
             'user',
             'phone',
             'image',
             'days_logged_in',
-            'favorite_genre'
-        ]
+            'favorite_genre',
+        )
