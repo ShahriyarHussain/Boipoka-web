@@ -1,6 +1,4 @@
-from django.db.models import fields
 from rest_framework import serializers
-from rest_framework.utils import field_mapping
 from .models import *
 from django.contrib.auth.models import User
 
