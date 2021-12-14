@@ -20,18 +20,23 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls.conf import include
 from rest_framework import routers
-from users import views
+from users import views as userviews
+from community import views as postviews
 
 userRouter = routers.DefaultRouter()
-userRouter.register(r'users', views.UserView, 'user')
-
 profileRouter = routers.DefaultRouter()
-profileRouter.register(r'profiles', views.ProfileView, 'user')
+postRouter = routers.DefaultRouter()
+userRouter.register(r'users', userviews.UserView, 'user')
+profileRouter.register(r'profiles', userviews.ProfileView, 'user')
+postRouter.register(r'posts', postviews.PostView, 'post')
+# profileRouter = routers.DefaultRouter()
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(userRouter.urls)),
     path('api/', include(profileRouter.urls)),
+    path('api/', include(postRouter.urls)),
     # path('api/', include(profileRouter)),
 ]
 

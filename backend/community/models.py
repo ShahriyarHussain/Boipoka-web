@@ -7,11 +7,11 @@ from PIL import Image
 # Create your models here.
 
 post_type = [
-    ('Sale', 'Is Having A Sale'),
-    ('Giveaway', 'Is Performing A Giveaway'),
-    ('Post Share', 'Shared A Post!'),
-    ('Book Review', 'Has Shared A Book Review!'),
-    ('Reading New Book', 'Is Reading A New Book!'),
+    ('Is Having A Sale', 'Is Having A Sale'),
+    ('Is Performing A Giveaway', 'Is Performing A Giveaway'),
+    ('Shared A Post!', 'Shared A Post!'),
+    ('Has Shared A Book Review!', 'Has Shared A Book Review!'),
+    ('Is Reading A New Book!', 'Is Reading A New Book!'),
 ]
 
 
@@ -21,11 +21,12 @@ class Post(models.Model):
                               blank=True, default='default.jpg')
     date_posted = models.DateTimeField(default=timezone.now, blank=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    likes = models.ManyToManyField(User, related_name='likes')
+    likes = models.ManyToManyField(
+        User, blank=True, default=author, related_name='likes')
     comments = models.ManyToManyField(
         User, related_name='comments', through='Post_Comment')
     post_type = models.CharField(
-        max_length=30, blank=False, default='Shared A Post', choices=post_type)
+        max_length=30, blank=False, default='Post Share', choices=post_type)
 
     def __str__(self):
         return f'{self.author.username} post'
