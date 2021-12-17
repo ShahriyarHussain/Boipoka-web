@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Community extends Component {
   constructor(props) {
     super(props);
-    this.state = { posts: [] };
+    this.state = { posts: [], status: false };
   }
 
   async componentDidMount() {
@@ -12,17 +12,22 @@ class Community extends Component {
       const post = await resource.json();
       this.setState({
         posts: post,
+        status: true,
       });
       console.log(post);
       console.log("fetch success");
     } catch (e) {
+      this.setState({
+        status: false,
+      });
       console.log(e);
     }
   }
 
   render() {
-    return (
-      <div className='flex-row ml-16 h-full w-full'>
+    let posts = null;
+    if (this.state.status) {
+      posts = (
         <div>
           <ul>
             {this.state.posts.map((post) => (
@@ -42,8 +47,11 @@ class Community extends Component {
             ))}
           </ul>
         </div>
-      </div>
-    );
+      );
+    } else {
+      posts = <div className='p-2 m-5'>Connections to server refused</div>;
+    }
+    return <div className='flex-row ml-16 h-full w-full'>{posts}</div>;
   }
 }
 
