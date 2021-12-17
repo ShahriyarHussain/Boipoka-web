@@ -21,7 +21,7 @@ class Post(models.Model):
                               blank=True, default='default.jpg')
     date_posted = models.DateTimeField(default=timezone.now, blank=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    likes = models.ManyToManyField(
+    liked_by = models.ManyToManyField(
         User, blank=True, default=author, related_name='likes')
     comments = models.ManyToManyField(
         User, related_name='comments', through='Post_Comment')
