@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Postcard from "./Postcard";
 
 class Community extends Component {
   constructor(props) {
@@ -25,33 +26,33 @@ class Community extends Component {
   }
 
   render() {
-    let posts = null;
+    let postList = null;
     if (this.state.status) {
-      posts = (
-        <div>
-          <ul>
-            {this.state.posts.map((post) => (
-              <li key={post.author}>
-                <div className='p-2 m-5'>
-                  <h1>
-                    {post.author} {post.post_type}
-                  </h1>
-                  <div>posted on {post.date_posted.split("T")[0]}</div>
-                  <div>
-                    {post.content} <br></br>
-                    <img src={post.image} alt='post' />
-                    Likes: {post.likes.length} <br></br>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+      postList = (
+        <ul>
+          {this.state.posts.map((post) => (
+            <li key={post.author}>
+              <Postcard
+                author={post.author}
+                type={post.type}
+                date={post.date_posted.split("T")[0]}
+                content={post.content}
+                likes={post.likes}
+              />
+            </li>
+          ))}
+        </ul>
       );
     } else {
-      posts = <div className='p-2 m-5'>Connections to server refused</div>;
+      postList = <div>Connections to server refused</div>;
     }
-    return <div className='flex-row ml-16 h-full w-full'>{posts}</div>;
+
+    return (
+      <div className='flex-row ml-16 h-full w-full'>
+        <h1 className='font-bold text-5xl p-2 m-5'>Community</h1>
+        <div className='p-2 m-5'>{postList}</div>
+      </div>
+    );
   }
 }
 

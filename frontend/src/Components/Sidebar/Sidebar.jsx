@@ -1,16 +1,15 @@
 import { AiFillHome } from "react-icons/ai";
 import { RiExchangeDollarFill } from "react-icons/ri";
-// import { GrGroup } from "react-icons/gr";
-import { BsFillBookmarkStarFill, BsCartCheckFill } from "react-icons/bs";
+import { BsCartCheckFill, BsFillBookmarkHeartFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 import { MdContactSupport, MdGroups } from "react-icons/md";
-import logo from "../../Assets/boipoka_logo.png";
+import logo from "../../Assets/boipoka_logo.svg";
 
 const Sidebar = () => {
   return (
     <div
       className='fixed top-0 left-0 h-screen w-16 m-0
-    flex flex-col bg-gray-800 text-white shadow-lg'>
+    flex flex-col bg-darkblue text-white shadow-lg'>
       <img src={logo} alt='logo' />
       <SidebarIcon icon={<AiFillHome size='48' />} text={"Home"}></SidebarIcon>
       <SidebarIcon
@@ -20,7 +19,7 @@ const Sidebar = () => {
         icon={<MdGroups size='48' />}
         text={"Community"}></SidebarIcon>
       <SidebarIcon
-        icon={<BsFillBookmarkStarFill size='48' />}
+        icon={<BsFillBookmarkHeartFill size='48' />}
         text={"Wishlist"}></SidebarIcon>
       <SidebarIcon
         icon={<BsCartCheckFill size='48' />}
