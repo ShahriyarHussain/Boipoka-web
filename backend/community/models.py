@@ -18,7 +18,7 @@ post_type = [
 class Post(models.Model):
     content = models.CharField(max_length=1000, blank=False)
     image = models.ImageField(upload_to='post_images',
-                              blank=True, default='default.jpg')
+                              blank=True, default='default.png')
     date_posted = models.DateTimeField(default=timezone.now, blank=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     liked_by = models.ManyToManyField(

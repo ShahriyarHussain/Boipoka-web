@@ -22,13 +22,18 @@ from django.urls.conf import include
 from rest_framework import routers
 from users import views as userviews
 from community import views as postviews
+from trades import views as tradeviews
 
 userRouter = routers.DefaultRouter()
 profileRouter = routers.DefaultRouter()
 postRouter = routers.DefaultRouter()
+tradeRouter = routers.DefaultRouter()
+bookRouter = routers.DefaultRouter()
 userRouter.register(r'users', userviews.UserView, 'user')
 profileRouter.register(r'profiles', userviews.ProfileView, 'user')
 postRouter.register(r'posts', postviews.PostView, 'post')
+tradeRouter.register(r'trades', tradeviews.ListingView, 'trade')
+bookRouter.register(r'books', tradeviews.BookView, 'trade')
 # profileRouter = routers.DefaultRouter()
 
 
@@ -37,9 +42,10 @@ urlpatterns = [
     path('api/', include(userRouter.urls)),
     path('api/', include(profileRouter.urls)),
     path('api/', include(postRouter.urls)),
+    path('api/', include(tradeRouter.urls)),
+    path('api/', include(bookRouter.urls)),
     # path('api/', include(profileRouter)),
 ]
 
-# if settings.DEBUG:
-#     urlpatterns += static(settings.MEDIA_URL,
-#                           document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,)

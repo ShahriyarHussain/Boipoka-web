@@ -38,6 +38,7 @@ class Community extends Component {
                 date={post.date_posted.split("T")[0]}
                 content={post.content}
                 likes={post.likes}
+                image={post.image}
               />
             </li>
           ))}
@@ -48,7 +49,7 @@ class Community extends Component {
     }
 
     return (
-      <div className='flex-row ml-16 h-full w-full'>
+      <div className='flex-row ml-16 h-auto w-auto'>
         <h1 className='font-bold text-5xl p-2 m-5'>Community</h1>
         <div className='p-2 m-5'>{postList}</div>
       </div>

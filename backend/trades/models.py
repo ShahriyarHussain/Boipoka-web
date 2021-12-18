@@ -55,8 +55,8 @@ class Book(models.Model):
     pages = models.IntegerField(blank=True, null=True)
     edition = models.IntegerField(blank=True, null=True)
     author = models.ManyToManyField(Author, blank=False)
-    image = models.ImageField(upload_to='book_covers',
-                              blank=True, default='default.png')
+    image = models.ImageField(
+        blank=True, upload_to='book_covers', default='default.png')
 
     def __str__(self):
         return f'{self.title}'
