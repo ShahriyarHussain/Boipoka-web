@@ -20,9 +20,3 @@ class ListingSerializer(serializers.ModelSerializer):
         #     representation['image'] = (instance.book.image)
 
         return representation
-
-
-class BookSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Book
-        fields = '__all__'

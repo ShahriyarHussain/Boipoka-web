@@ -6,8 +6,8 @@ const Postcard = ({ author, type, date, content, likes, image }) => {
       </h1>
       <div>posted on {date}</div>
       <div>
-        {content} <br></br>
-        <img src={image} alt='post' width={"200px"} height={"400px"} />
+        <div>{content}</div>
+        {/* <img src={image} alt='post' width={"200px"} height={"400px"} /> */}
         Likes: {likes} <br></br>
       </div>
     </div>

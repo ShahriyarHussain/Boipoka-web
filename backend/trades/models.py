@@ -70,9 +70,9 @@ class Listing(models.Model):
     price = models.IntegerField(blank=False, default=0)
     condition = models.IntegerField(choices=condition_choices, blank=False)
     negotiable = models.BooleanField(
-        blank=False, choices=negotiable_choices, null=True)
+        default=False, choices=negotiable_choices, blank=False)
     listing_type = models.BooleanField(
-        blank=False, choices=listing_choices)
+        default=False, blank=False, choices=listing_choices)
     date = models.DateTimeField(default=timezone.now)
     book = models.ForeignKey(
         Book, on_delete=models.CASCADE, related_name='listed_book')

@@ -1,14 +1,12 @@
 import React from "react";
 import "./App.css";
-import Sidebar from "./Components/Sidebar/Sidebar";
-import Community from "./Components/Community/Community";
+import SideNavBar from "./Components/SideNavBar/SideNavBar";
 
 function App() {
   return (
     <div>
       <div>
-        <Sidebar />
-        <Community />
+        <SideNavBar />
       </div>
     </div>
   );

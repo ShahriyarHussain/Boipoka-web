@@ -38,7 +38,7 @@ class Community extends Component {
                 date={post.date_posted.split("T")[0]}
                 content={post.content}
                 likes={post.likes}
-                image={post.image}
+                // image={post.image}
               />
             </li>
           ))}

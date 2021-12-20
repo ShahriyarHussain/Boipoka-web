@@ -33,7 +33,7 @@ userRouter.register(r'users', userviews.UserView, 'user')
 profileRouter.register(r'profiles', userviews.ProfileView, 'user')
 postRouter.register(r'posts', postviews.PostView, 'post')
 tradeRouter.register(r'trades', tradeviews.ListingView, 'trade')
-bookRouter.register(r'books', tradeviews.BookView, 'trade')
+
 # profileRouter = routers.DefaultRouter()
 
 
@@ -43,7 +43,7 @@ urlpatterns = [
     path('api/', include(profileRouter.urls)),
     path('api/', include(postRouter.urls)),
     path('api/', include(tradeRouter.urls)),
-    path('api/', include(bookRouter.urls)),
+
     # path('api/', include(profileRouter)),
 ]
 
