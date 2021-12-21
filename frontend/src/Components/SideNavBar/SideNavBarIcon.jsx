@@ -1,9 +1,9 @@
 import "./SideNavBar.css";
 
-const SidebarIcon = ({ icon, text, selected }) => (
+const SidebarIcon = (props) => (
   <div className='sidebar-icon group'>
-    {icon}
-    <span className='sidebar-tip group-hover:scale-100'>{text}</span>
+    {props.icon}
+    <span className='sidebar-tip group-hover:scale-100'>{props.text}</span>
   </div>
 );
 

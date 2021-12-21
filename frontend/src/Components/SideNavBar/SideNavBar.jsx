@@ -5,59 +5,55 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdContactSupport, MdGroups } from "react-icons/md";
 import logo from "../../Assets/boipoka_logo.svg";
 import "./SideNavBar.css";
-import Community from "../Community/Community";
-import Trades from "../Trade/Trade";
+// import Community from "../Community/Community";
+// import Trades from "../Trade/Trade";
 import SideNavBarIcon from "./SideNavBarIcon";
 
-const Sidebar = () => {
-  let selection = 11;
-  let renderPage = <Trades />;
-  if (selection === 2) renderPage = <Trades />;
-  if (selection === 11) renderPage = <Community />;
-  const setSelected = (number) => {
-    selection = number;
-  };
-
+const SideNavBar = (props) => {
   return (
     <div>
       <div
         className='fixed top-0 left-0 h-screen w-16 m-0 flex flex-col
         bg-darkblue text-white shadow-lg'>
         <img src={logo} alt='logo' />
-        <SideNavBarIcon
-          icon={<AiFillHome size='48' />}
-          text={"Home"}
-          onClick={setSelected.bind(11)}></SideNavBarIcon>
-        <SideNavBarIcon
-          icon={<RiExchangeDollarFill size='48' />}
-          text={"Trade"}
-          onClick={setSelected.bind(2)}></SideNavBarIcon>
-        <SideNavBarIcon
-          icon={<MdGroups size='48' />}
-          text={"Community"}
-          onClick={setSelected.bind(3)}></SideNavBarIcon>
-        <SideNavBarIcon
-          icon={<BsFillBookmarkHeartFill size='48' />}
-          text={"Wishlist"}
-          onClick={setSelected.bind(4)}></SideNavBarIcon>
-        <SideNavBarIcon
-          icon={<BsCartCheckFill size='48' />}
-          text={"Cart"}
-          onClick={setSelected.bind(5)}></SideNavBarIcon>
-        <SideNavBarIcon
-          icon={<FaUserCircle size='48' />}
-          text={"Account"}
-          onClick={setSelected.bind(6)}></SideNavBarIcon>
-        <SideNavBarIcon
-          icon={<MdContactSupport size='48' />}
-          text={"Support"}
-          onClick={setSelected.bind(7)}></SideNavBarIcon>
+        <button onClick={() => props.click(0)}>
+          <SideNavBarIcon
+            icon={<AiFillHome size='48' />}
+            text={"Home"}></SideNavBarIcon>
+        </button>
+        <button onClick={() => props.click(1)}>
+          <SideNavBarIcon
+            icon={<RiExchangeDollarFill size='48' />}
+            text={"Trade"}></SideNavBarIcon>
+        </button>
+        <button onClick={() => props.click(2)}>
+          <SideNavBarIcon
+            icon={<MdGroups size='48' />}
+            text={"Community"}></SideNavBarIcon>
+        </button>
+        <button onClick={() => props.click(3)}>
+          <SideNavBarIcon
+            icon={<BsFillBookmarkHeartFill size='48' />}
+            text={"Wishlist"}></SideNavBarIcon>
+        </button>
+        <button onClick={() => props.click(4)}>
+          <SideNavBarIcon
+            icon={<BsCartCheckFill size='48' />}
+            text={"Cart"}></SideNavBarIcon>
+        </button>
+        <button onClick={() => props.click(5)}>
+          <SideNavBarIcon
+            icon={<FaUserCircle size='48' />}
+            text={"Account"}></SideNavBarIcon>
+        </button>
+        <button onClick={() => props.click(6)}>
+          <SideNavBarIcon
+            icon={<MdContactSupport size='48' />}
+            text={"Support"}></SideNavBarIcon>
+        </button>
       </div>
-
-      <div>{renderPage}</div>
-      {console.log("this", selection)}
     </div>
   );
 };
 
-export default Sidebar;
+export default SideNavBar;
