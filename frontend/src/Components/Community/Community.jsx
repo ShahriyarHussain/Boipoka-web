@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Postcard from "./Postcard";
+import Loader from "../Loaders/Loaders";
 
 class Community extends Component {
   constructor(props) {
@@ -45,7 +46,7 @@ class Community extends Component {
         </ul>
       );
     } else {
-      postList = <div>Connections to server refused</div>;
+      postList = <Loader />;
     }
 
     return (

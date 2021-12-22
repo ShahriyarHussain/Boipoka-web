@@ -5,6 +5,6 @@ from .models import Listing, Book
 # Create your views here.
 
 
-class ListingView(viewsets.ModelViewSet):
-    serializer_class = ListingSerializer
-    queryset = Listing.objects.all()
+# class ListingView(viewsets.ModelViewSet):
+#     serializer_class = ListingSerializer
+#     queryset = Listing.objects.all()
