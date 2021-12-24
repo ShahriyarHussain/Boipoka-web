@@ -1,5 +1,5 @@
 import { AiFillHome } from "react-icons/ai";
-import { RiExchangeDollarFill } from "react-icons/ri";
+import { RiExchangeDollarFill, RiLogoutBoxRLine } from "react-icons/ri";
 import { BsCartCheckFill, BsFillBookmarkHeartFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 import { MdContactSupport, MdGroups } from "react-icons/md";
@@ -85,6 +85,15 @@ const SideNavBar = (props) => {
             isSelected={test === 6}
             icon={<MdContactSupport size='48' />}
             text={"Support"}></SideNavBarIcon>
+        </button>
+        <button
+          onClick={() => {
+            props.logoutFunc();
+          }}>
+          <SideNavBarIcon
+            isSelected={false}
+            icon={<RiLogoutBoxRLine size='48' />}
+            text={"Logout"}></SideNavBarIcon>
         </button>
       </div>
     </div>
