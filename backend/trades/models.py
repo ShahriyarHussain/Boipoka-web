@@ -55,8 +55,8 @@ class Book(models.Model):
     pages = models.IntegerField(blank=True, null=True)
     edition = models.IntegerField(blank=True, null=True)
     author = models.ManyToManyField(Author, blank=False)
-    image = models.ImageField(upload_to='book_covers',
-                              blank=True, default='default.png')
+    image = models.ImageField(
+        blank=True, upload_to='book_covers', default='default.png')
 
     def __str__(self):
         return f'{self.title}'
@@ -70,9 +70,9 @@ class Listing(models.Model):
     price = models.IntegerField(blank=False, default=0)
     condition = models.IntegerField(choices=condition_choices, blank=False)
     negotiable = models.BooleanField(
-        blank=False, choices=negotiable_choices, null=True)
+        default=False, choices=negotiable_choices, blank=False)
     listing_type = models.BooleanField(
-        blank=False, choices=listing_choices)
+        default=False, blank=False, choices=listing_choices)
     date = models.DateTimeField(default=timezone.now)
     book = models.ForeignKey(
         Book, on_delete=models.CASCADE, related_name='listed_book')
