@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Axios from "axios";
 
-const base_url = window.SERVER_ADDRESS;
+const base_url = "http://127.0.0.1:8000/users/";
 
 const required = (val) => val && val.length;
 const minLength = (len, val) => !val || val.length < len;
@@ -21,6 +21,7 @@ function RegisterUser() {
     display_password: false,
     display_password2: false,
   });
+  const [message, setmessage] = useState(false);
 
   const getErrors = (name, value) => {
     let errors = [];
@@ -90,7 +91,7 @@ function RegisterUser() {
     const { first_name, last_name, username, password } = state;
     if (isValid()) {
       console.log(e, " Inside If");
-      Axios.post("http://127.0.0.1:8000/users/users/create", {
+      Axios.post(base_url + "users/create", {
         user: {
           first_name: first_name,
           last_name: last_name,
@@ -103,6 +104,9 @@ function RegisterUser() {
           console.log(
             "userReg: respstat " + response.status + " " + response.statusText
           );
+          const message = response.status + " " + response.statusText;
+          console.log(message === "200 OK");
+          setmessage(message === "200 OK");
         })
         .catch((error) => {
           console.log("userReg: " + error);
@@ -131,6 +135,9 @@ function RegisterUser() {
   return (
     <div>
       <form onSubmit={sendRegistration} noValidate>
+        <div className='m-2 text-black'>
+          {message ? `Registration Success! Click Login` : `Fill Up The Form`}
+        </div>
         <div>
           <label htmlFor='first_name'> First name </label>
           <input

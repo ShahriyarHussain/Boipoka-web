@@ -46,17 +46,17 @@ function NavComponent(props) {
     </ul>
   );
 
-  const logged_out_nav = (
-    <ul>
-      <li>
-        <button
-          className='bg-darkblue rounded-lg p-2 ml-16 mt-2 text-white cursor-text'
-          onClick={props.handleLogout}>
-          {props.logged_in ? `Logout` : `Login Again !`}
-        </button>
-      </li>
-    </ul>
-  );
+  // const logged_out_nav = (
+  //   <ul>
+  //     <li>
+  //       <button
+  //         className='bg-darkblue rounded-lg p-2 ml-16 mt-2 text-white cursor-text'
+  //         onClick={props.handleLogout}>
+  //         {props.logged_in ? `Logout` : `Login Again !`}
+  //       </button>
+  //     </li>
+  //   </ul>
+  // );
 
   return (
     <div>

@@ -33,7 +33,7 @@ function Requests() {
         })
         .catch((err) => console.log("fetch error", err));
     }
-  }, []);
+  }, [userData.logged_in, userData.username]);
 
   const display_form = (formName) => {
     console.log("func", formName);
