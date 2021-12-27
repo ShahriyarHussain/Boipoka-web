@@ -6,10 +6,11 @@ import { MdContactSupport, MdGroups } from "react-icons/md";
 import logo from "../../Assets/boipoka_logo.svg";
 import "./SideNavBar.css";
 import SideNavBarIcon from "./SideNavBarIcon";
-
-let test = 0;
+import { useNavigate } from "react-router-dom";
 
 const SideNavBar = (props) => {
+  let test = 0;
+  let navigate = useNavigate();
   return (
     <div>
       <div
@@ -88,7 +89,8 @@ const SideNavBar = (props) => {
         </button>
         <button
           onClick={() => {
-            props.logoutFunc();
+            localStorage.removeItem("token");
+            navigate("/login");
           }}>
           <SideNavBarIcon
             isSelected={false}
