@@ -53,11 +53,6 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES:' [
-#         'rest_framework.permission.AllowAny',
-#     ]
-# }
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -69,6 +64,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES:' [
+#         'rest_framework.permission.AllowAny',
+#     ]
+# }
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

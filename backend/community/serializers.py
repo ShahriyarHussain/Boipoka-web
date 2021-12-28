@@ -3,7 +3,15 @@ from .models import *
 from django.contrib.auth.models import User
 
 
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post_Comment
+        fields = '__all__'
+
+
 class PostSerializer(serializers.ModelSerializer):
+
+    comments = CommentSerializer(many=True, required=False, read_only=True)
 
     class Meta:
         model = Post

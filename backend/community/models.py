@@ -17,14 +17,14 @@ post_type = [
 
 class Post(models.Model):
     content = models.CharField(max_length=1000, blank=False)
-    image = models.ImageField(upload_to='post_images',
-                              blank=True, default='default.png')
+    # image = models.ImageField(upload_to='post_images',
+    #                           blank=True, default='default.png')
     date_posted = models.DateTimeField(default=timezone.now, blank=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     liked_by = models.ManyToManyField(
         User, blank=True, default=author, related_name='likes')
     comments = models.ManyToManyField(
-        User, related_name='comments', through='Post_Comment')
+        User, blank=True, related_name='comments', through='Post_Comment')
     post_type = models.CharField(
         max_length=30, blank=False, default='Post Share', choices=post_type)
 
