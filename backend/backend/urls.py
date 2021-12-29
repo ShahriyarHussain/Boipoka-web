@@ -20,7 +20,9 @@ from django.urls import path, include
 from django.urls.conf import re_path
 from rest_framework_jwt.views import obtain_jwt_token
 from .views import home
-# from community import urls as community_urls
+from community import urls as community_urls
+# from rest_framework import routers
+# from community.views import PostViewSet
 
 
 urlpatterns = [
@@ -30,7 +32,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     # path('api/', include(userRouter.urls)),
     # path('api/', include(profileRouter.urls)),
-    re_path(r'api/', include('community.urls')),
+    re_path(r'api/', include(community_urls)),
 ]
 
 # if settings.DEBUG:

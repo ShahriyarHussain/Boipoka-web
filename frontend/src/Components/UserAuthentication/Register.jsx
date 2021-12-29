@@ -1,6 +1,6 @@
 import Axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import logo from "../../Assets/boipoka_logo.svg";
 
 function Register() {
@@ -13,7 +13,7 @@ function Register() {
     password: "",
   });
   const [pass, setpass] = useState("");
-  const [message, setmessage] = useState("Work in progress");
+  const [message, setmessage] = useState("Development preview");
 
   let navigate = useNavigate();
 
@@ -69,9 +69,15 @@ function Register() {
   return (
     <div>
       <div className='flex flex-col items-center'>
-        <img src={logo} height='100px' width='100px' alt='Boipoka Logo' />
-        <h2 className='font-extrabold text-center text-5xl p-2 mt-2 mb-4'>
-          Create An Account In Boipoka
+        <img
+          className='rounded-full p-2 mt-2 bg-darkblue'
+          src={logo}
+          height='100px'
+          width='100px'
+          alt='Boipoka Logo'
+        />
+        <h2 className='font-extrabold text-center text-3xl p-2 mt-2 mb-4'>
+          Create A Boipoka Account
         </h2>
       </div>
 
@@ -151,7 +157,17 @@ function Register() {
             Register
           </button>
         </form>
-        <p className='text-red-600 m-5 p-3 font-bold text-2xl'>{message}</p>
+
+        <div className='mt-3 p-3 font-bold text-md'>
+          <p className='text-darkblue'>
+            Already have an account?
+            <Link to='/login'>
+              <span className='text-yellow-500 ml-2'> Log in</span>
+            </Link>
+          </p>
+        </div>
+
+        <p className='text-red-600 mt-3 font-bold text-xl'>{message}</p>
       </div>
     </div>
   );

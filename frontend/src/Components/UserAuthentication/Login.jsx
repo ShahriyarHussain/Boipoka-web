@@ -1,58 +1,52 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../Assets/boipoka_logo.svg";
-import { UserContext } from "../../UserContext";
+import CheckLogin from "../../Hooks/CheckLogin";
+import { UserContext } from "../../Hooks/UserContext";
 function Login() {
   const base_url = "http://127.0.0.1:8000/";
 
-  const [username, setUsername] = useState("");
+  const [loginUsername, setLoginUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("Work in progress");
-  const { loggedIn, setloggedIn } = useContext(UserContext);
+  const [message, setMessage] = useState("Development Preview");
+  const { setloggedIn, setUserId, setUsername } = useContext(UserContext);
   const navigate = useNavigate();
 
-  console.log("first", loggedIn);
-  console.log("next", localStorage.getItem("token") ? true : false);
-
-  useEffect(() => {
-    if (localStorage.getItem("token") ? true : false) {
-      fetch(base_url + "users/current_user", {
-        method: "GET",
-        headers: {
-          Authorization: `JWT ${localStorage.getItem("token")}`,
-        },
-      })
-        .then((response) => {
-          if (response.status === 200) {
-            console.log(response.status);
-            return response.json();
-          } else {
-            setloggedIn(false);
-            setMessage("Session expired, please login again");
-            return response.statusText;
-          }
-        })
-        .then((json) => {
-          if (json === "Bad Request") {
-            console.log(json);
-            setMessage("Invalid Credentials");
-            return "";
-          } else {
-            console.log(json);
-            setloggedIn(true);
-            setMessage("Login Success");
-            navigate("/home");
-          }
-        });
-    }
-  }, []);
-
-  console.log("after", loggedIn);
+  // useEffect(() => {
+  //   if (localStorage.getItem("token") ? true : false) {
+  //     setMessage("Logging In");
+  //     fetch(base_url + "users/current_user", {
+  //       method: "GET",
+  //       headers: {
+  //         Authorization: `JWT ${localStorage.getItem("token")}`,
+  //       },
+  //     })
+  //       .then((response) => {
+  //         if (response.status === 200) {
+  //           setMessage("Login Successful");
+  //           setloggedIn(true);
+  //           navigate("/");
+  //           return response.json();
+  //         } else {
+  //           setloggedIn(false);
+  //           setMessage("Session expired, please login again");
+  //           return response.statusText;
+  //         }
+  //       })
+  //       .then((json) => {
+  //         setUserId(json.id);
+  //         setUsername(json.username);
+  //         console.log(json);
+  //       });
+  //   }
+  // }, []);
 
   const loginHandler = (e) => {
     e.preventDefault();
+
     setMessage("Logging in");
-    const loginData = { username, password };
+    const loginData = { username: loginUsername, password };
+    console.log(loginData);
     fetch(base_url + "token-auth/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -71,18 +65,31 @@ function Login() {
           return "";
         } else {
           localStorage.setItem("token", json.token);
+          console.log(json);
           setloggedIn(true);
+          setUserId(json.user.id);
+          setUsername(json.user.username);
           setMessage("Login Success");
-          navigate("/home");
+          navigate("/");
         }
+      })
+      .catch((error) => {
+        if (error === "NetworkError") console.log(error);
+        setMessage("Network Error Occured, check internet connection");
       });
   };
 
   return (
     <div>
       <div className='flex flex-col items-center'>
-        <img src={logo} height='100px' width='100px' alt='Boipoka Logo' />
-        <h2 className='font-extrabold text-5xl p-2 m-4'>Login To Boipoka</h2>
+        <img
+          className='rounded-full p-2 mt-2 bg-darkblue'
+          src={logo}
+          height='100px'
+          width='100px'
+          alt='Boipoka Logo'
+        />
+        <h2 className='font-extrabold text-3xl p-2 m-4'>Login To Boipoka</h2>
       </div>
 
       <div className='flex flex-col items-center'>
@@ -94,9 +101,9 @@ function Login() {
             className='rounded-md border-2 border-gray-200 drop-shadow-sm h-8'
             type='text'
             required
-            value={username}
+            value={loginUsername}
             onChange={(e) => {
-              setUsername(e.target.value);
+              setLoginUsername(e.target.value);
             }}
           />
 
@@ -116,7 +123,16 @@ function Login() {
           </button>
         </form>
 
-        <p className='text-red-600 m-5 p-3 font-bold text-2xl'>{message}</p>
+        <div className='m-5 p-3 font-bold text-md'>
+          <p className='text-darkblue'>
+            Don't have an acount ?
+            <Link to='/register'>
+              <span className='text-yellow-500 ml-2'> Register</span>
+            </Link>
+          </p>
+        </div>
+
+        <p className='text-red-600 m-2 font-bold text-xl'>{message}</p>
       </div>
     </div>
   );

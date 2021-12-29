@@ -1,3 +1,5 @@
+import CheckLogin from "../../Hooks/CheckLogin";
+
 const Listings = ({
   desc,
   price,
@@ -8,6 +10,7 @@ const Listings = ({
   views,
   wishlists,
 }) => {
+  CheckLogin();
   return (
     <div className='p-2 m-5'>
       <div className='p-2 m-5'>{desc}</div>
