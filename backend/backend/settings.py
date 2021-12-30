@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 import environ
+import datetime
 
 
 env = environ.Env()
@@ -53,11 +54,6 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES:' [
-#         'rest_framework.permission.AllowAny',
-#     ]
-# }
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -69,6 +65,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES:' [
+#         'rest_framework.permission.AllowAny',
+#     ]
+# }
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -83,7 +86,9 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER':
-    'backend.utils.custom_jwt_response_handler'
+    'backend.utils.custom_jwt_response_handler',
+
+    'JWT EXPIRATIONS DELTA': datetime.timedelta(seconds=6000),
 }
 
 

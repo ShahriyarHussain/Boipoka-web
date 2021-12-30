@@ -6,95 +6,99 @@ import { MdContactSupport, MdGroups } from "react-icons/md";
 import logo from "../../Assets/boipoka_logo.svg";
 import "./SideNavBar.css";
 import SideNavBarIcon from "./SideNavBarIcon";
+import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
-let test = 0;
-
-const SideNavBar = (props) => {
+const SideNavBar = () => {
+  const [page, setPage] = useState(0);
+  let navigate = useNavigate();
   return (
     <div>
       <div
         className='fixed top-0 left-0 h-screen w-16 m-0 flex flex-col
         bg-darkblue text-white shadow-lg'>
         <img src={logo} alt='logo' />
-        <button
+        <Link
           onClick={() => {
-            test = 0;
-            props.click(test);
-          }}>
+            setPage(0);
+          }}
+          to='/'>
           <SideNavBarIcon
-            isSelected={test === 0}
+            isSelected={page === 0}
             icon={<AiFillHome size='48' />}
             text={"Home"}></SideNavBarIcon>
-        </button>
-        <button
+        </Link>
+        <Link
           onClick={() => {
-            test = 1;
-            props.click(test);
-          }}>
+            setPage(1);
+          }}
+          to='/listings'>
           <SideNavBarIcon
-            isSelected={test === 1}
+            isSelected={page === 1 ? true : false}
             icon={<RiExchangeDollarFill size='48' />}
             text={"Trade"}></SideNavBarIcon>
-        </button>
-        <button
+        </Link>
+        <Link
           onClick={() => {
-            test = 2;
-            props.click(test);
-          }}>
+            setPage(2);
+          }}
+          to='/community'>
           <SideNavBarIcon
-            isSelected={test === 2}
+            isSelected={page === 2}
             icon={<MdGroups size='48' />}
             text={"Community"}></SideNavBarIcon>
-        </button>
-        <button
+        </Link>
+        <Link
           onClick={() => {
-            test = 3;
-            props.click(test);
-          }}>
+            setPage(3);
+          }}
+          to='/wishlist'>
           <SideNavBarIcon
-            isSelected={test === 3}
+            isSelected={page === 3}
             icon={<BsFillBookmarkHeartFill size='48' />}
             text={"Wishlist"}></SideNavBarIcon>
-        </button>
-        <button
+        </Link>
+        <Link
           onClick={() => {
-            test = 4;
-            props.click(test);
-          }}>
+            setPage(4);
+          }}
+          to='/cart'>
           <SideNavBarIcon
-            isSelected={test === 4}
+            isSelected={page === 4}
             icon={<BsCartCheckFill size='48' />}
             text={"Cart"}></SideNavBarIcon>
-        </button>
-        <button
+        </Link>
+        <Link
           onClick={() => {
-            test = 5;
-            props.click(test);
-          }}>
+            setPage(5);
+          }}
+          to='/account'>
           <SideNavBarIcon
-            isSelected={test === 5}
+            isSelected={page === 5}
             icon={<FaUserCircle size='48' />}
             text={"Account"}></SideNavBarIcon>
-        </button>
-        <button
+        </Link>
+        <Link
           onClick={() => {
-            test = 6;
-            props.click(test);
-          }}>
+            setPage(6);
+          }}
+          to='/support'>
           <SideNavBarIcon
-            isSelected={test === 6}
+            isSelected={page === 6}
             icon={<MdContactSupport size='48' />}
             text={"Support"}></SideNavBarIcon>
-        </button>
-        <button
+        </Link>
+        <Link
           onClick={() => {
-            props.logoutFunc();
-          }}>
+            localStorage.removeItem("token");
+            navigate("/login");
+          }}
+          to='/login'>
           <SideNavBarIcon
             isSelected={false}
             icon={<RiLogoutBoxRLine size='48' />}
             text={"Logout"}></SideNavBarIcon>
-        </button>
+        </Link>
       </div>
     </div>
   );

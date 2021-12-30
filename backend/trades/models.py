@@ -51,10 +51,12 @@ class Book(models.Model):
     title = models.CharField(max_length=200, blank=False, null=False)
     isbn = models.CharField(unique=True, blank=False,
                             max_length=100, null=False)
+    description = models.TextField(blank=True, null=False)
     genres = models.CharField(max_length=25, choices=genres)
     pages = models.IntegerField(blank=True, null=True)
     edition = models.IntegerField(blank=True, null=True)
     author = models.ManyToManyField(Author, blank=False)
+    # author = models.CharField(blank=False, max_length=500, null=True)
     image = models.ImageField(
         blank=True, upload_to='book_covers', default='default.png')
 
@@ -96,6 +98,9 @@ class Listing(models.Model):
     def __str__(self):
         return f'{self.listed_by}\'s listing'
 
+    class Meta:
+        ordering = ['-date']
+
     # def save(self, *args, **kwargs):
     #     super().save
 
@@ -104,7 +109,7 @@ class Listing_Image(models.Model):
     listing = models.ForeignKey(
         Listing, on_delete=models.CASCADE)
     image = models.ImageField(
-        upload_to='listing_images', blank=True, default='default.png')
+        upload_to='listing_images', blank=True, default='https://mir-s3-cdn-cf.behance.net/project_modules/1400/56d96263885635.5acd0047cf3e6.jpg')
 
     def __str__(self):
         return f'{self.listing.listed_by}--{self.listing.book.title}\'s listing image'

@@ -1,61 +1,107 @@
-import React, { Component } from "react";
+// import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Postcard from "./Postcard";
 import Loader from "../Loaders/Loaders";
+// import { UserContext } from "../../Hooks/UserContext";
+import CheckLogin from "../../Hooks/CheckLogin";
+import { Link, useNavigate } from "react-router-dom";
 
-class Community extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { posts: [], status: false };
-  }
+const Community = () => {
+  CheckLogin();
 
-  async componentDidMount() {
-    try {
-      const resource = await fetch("http://127.0.0.1:8000/api/posts/");
-      const post = await resource.json();
-      this.setState({
-        posts: post,
-        status: true,
-      });
-      console.log(post);
-      console.log("fetch success");
-    } catch (e) {
-      this.setState({
-        status: false,
-      });
-      console.log(e);
-    }
-  }
+  const base_url = "http://127.0.0.1:8000/api/posts/";
+  const [isPending, setIsPending] = useState(false);
+  const [posts, setPosts] = useState("");
+  const [error, setError] = useState(null);
+  let navigate = useNavigate();
+  // const { userId } = useContext(UserContext);
 
-  render() {
-    let postList = null;
-    if (this.state.status) {
-      postList = (
-        <ul>
-          {this.state.posts.map((post) => (
-            <li key={post.author}>
-              <Postcard
-                author={post.author}
-                type={post.type}
-                date={post.date_posted.split("T")[0]}
-                content={post.content}
-                likes={post.likes}
-                // image={post.image}
-              />
-            </li>
-          ))}
-        </ul>
-      );
-    } else {
-      postList = <Loader />;
-    }
+  useEffect(() => {
+    setIsPending(true);
+    const abortController = new AbortController();
+    setTimeout(() => {
+      fetch(
+        base_url,
+        {
+          headers: {
+            Authorization: `JWT ${localStorage.getItem("token")}`,
+          },
+        },
+        { signal: abortController.signal }
+      )
+        .then((response) => {
+          console.log(response);
+          console.log("success1");
+          if (!response.ok) {
+            setError("Unable to fetch post from the resource");
+            navigate("/login");
+            throw Error("Unable to fetch post from the resource");
+          }
+          return response.json();
+        })
+        .then((json) => {
+          setIsPending(false);
+          setPosts(json);
+          setError(null);
+        })
+        .catch((err) => {
+          if (err.name === "AbortError") {
+            console.log("Fetch operation ignored");
+          } else if (err.name === "TypeError") {
+            setIsPending(false);
+            setError("Unable to connect to server");
+            navigate("/login");
+          } else {
+            setIsPending(false);
+            setError(err.toString());
+          }
+        });
+    }, 1000);
 
-    return (
-      <div className='flex-row ml-16 h-auto w-auto'>
-        <h1 className='font-bold text-5xl p-2 m-5'>Community</h1>
-        <div className='p-2 m-5'>{postList}</div>
+    return () => {
+      abortController.abort();
+    };
+  }, [base_url]);
+
+  return (
+    <div className='ml-20 mt-4 h-auto w-auto'>
+      <div className='mt-5 ml-1'>
+        <h1 className='font-bold text-4xl p-2 '>Booklover's Community</h1>
+        {isPending ? <Loader /> : ""}
+        {error && (
+          <div className='text-red-600 font-bold text-3xl ml-3'> {error} </div>
+        )}
+        {!isPending ? (
+          <Link to='/create_post'>
+            <button className='bg-mildorange text-darkblue font-semibold rounded-md hover:bg-yellow-400 transition-all p-2 ml-3 mt-3'>
+              Create a post
+            </button>
+          </Link>
+        ) : (
+          ""
+        )}
+        <div>
+          {posts && (
+            <div>
+              {posts.map((post) => (
+                <div className='max-w-2xl ml-6 h-auto my-3' key={post.id}>
+                  <Postcard
+                    id={post.id}
+                    author={post.author}
+                    type={post.post_type}
+                    date={post.date_posted}
+                    content={post.content}
+                    likes={post.likes}
+                    comments={post.commentCount}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Community;
