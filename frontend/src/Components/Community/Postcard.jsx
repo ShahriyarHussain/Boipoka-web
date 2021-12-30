@@ -12,7 +12,10 @@ const Postcard = ({ id, author, type, date, content, likes, comments }) => {
           <span>{type}</span>
         </div>
         <div>
-          <span className='text-gray-400 text-sm'> on {date}</span>
+          <span className='text-gray-400 text-sm'>
+            {" "}
+            on {date.split("T")[0]} at {date.split("T")[1].split(".")[0]}
+          </span>
         </div>
         <hr width='full' />
         <Link to={`/posts/${id}`}>

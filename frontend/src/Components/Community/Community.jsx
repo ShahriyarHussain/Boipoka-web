@@ -89,7 +89,7 @@ const Community = () => {
                     id={post.id}
                     author={post.author}
                     type={post.post_type}
-                    date={post.date_posted.split("T")[0]}
+                    date={post.date_posted}
                     content={post.content}
                     likes={post.likes}
                     comments={post.commentCount}

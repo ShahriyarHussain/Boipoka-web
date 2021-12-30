@@ -98,7 +98,10 @@ const PostDetails = () => {
               <span className='ml-1'>{postDetails.type}</span>
             </div>
             <div>
-              <span className='text-gray-300 mt-1'> on {postDetails.date}</span>
+              <span className='text-gray-300 mt-1'>
+                on {postDetails.date_posted.split("T")[0]} at{" "}
+                {postDetails.date_posted.split("T")[1].split(".")[0]}
+              </span>
             </div>
             <div className='bg-gray-500 rounded-xl mt-4'>
               <article className='font-medium p-4'>

@@ -16,6 +16,8 @@ import SideNavBar from "./Components/SideNavBar/SideNavBar";
 import CreatePost from "./Components/Community/CreatePost";
 import UpdatePost from "./Components/Community/UpdatePost";
 import DeletePost from "./Components/Community/DeletePost";
+import AddListing from "./Components/Trade/AddListing";
+import ListingCard from "./Components/Trade/ListingCard";
 
 function App() {
   const [loggedIn, setloggedIn] = useState(false);
@@ -39,12 +41,14 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Homepage />} />
-            <Route path='/listings' element={<Listings />} />
             <Route path='/community' element={<Community />} />
             <Route path='/create_post' element={<CreatePost />} />
             <Route path='posts/:id' element={<PostDetails />} />
             <Route path='posts/update/:id' element={<UpdatePost />} />
             <Route path='posts/delete/:id' element={<DeletePost />} />
+            <Route path='/listings' element={<Listings />} />
+            <Route path='/listings_details' element={<ListingCard />} />
+            <Route path='/add_listing' element={<AddListing />} />
             <Route path='/wishlist' element={<Wishlist />} />
             <Route path='/cart' element={<CartPage />} />
             <Route path='/account' element={<Account />} />
