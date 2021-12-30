@@ -15,7 +15,7 @@ function CreatePost() {
   const [message, setMessage] = useState("");
   const [postDetails, setPostDetails] = useState({
     content: "",
-    post_type: "",
+    post_type: "Is Having A Sale",
   });
 
   let navigate = useNavigate();

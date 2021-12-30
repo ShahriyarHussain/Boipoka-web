@@ -74,10 +74,15 @@ const PostDetails = () => {
       <div className='text-red-600 font-bold text-3xl'> {error} </div>
       <div>
         {postDetails.author === username ? (
-          <div>
-            <Link to={`/posts/update/${id}/`}>
-              <button className='bg-mildorange rounded-lg p-2 font-bold my-4'>
+          <div className='flex flex-row'>
+            <Link className='m-4' to={`/posts/update/${id}/`}>
+              <button className='bg-mildorange rounded-lg p-2 font-bold'>
                 Update Post
+              </button>
+            </Link>
+            <Link className='m-4' to={`/posts/delete/${id}/`}>
+              <button className='bg-red-700 text-purewhite rounded-lg p-2 font-bold'>
+                Delete Post
               </button>
             </Link>
           </div>

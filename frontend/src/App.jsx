@@ -15,6 +15,7 @@ import Account from "./Components/Account/Account";
 import SideNavBar from "./Components/SideNavBar/SideNavBar";
 import CreatePost from "./Components/Community/CreatePost";
 import UpdatePost from "./Components/Community/UpdatePost";
+import DeletePost from "./Components/Community/DeletePost";
 
 function App() {
   const [loggedIn, setloggedIn] = useState(false);
@@ -37,15 +38,16 @@ function App() {
           <Routes>
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
-            <Route path='posts/:id' element={<PostDetails />} />
-            <Route path='posts/update/:id' element={<UpdatePost />} />
             <Route path='/' element={<Homepage />} />
             <Route path='/listings' element={<Listings />} />
             <Route path='/community' element={<Community />} />
+            <Route path='/create_post' element={<CreatePost />} />
+            <Route path='posts/:id' element={<PostDetails />} />
+            <Route path='posts/update/:id' element={<UpdatePost />} />
+            <Route path='posts/delete/:id' element={<DeletePost />} />
             <Route path='/wishlist' element={<Wishlist />} />
             <Route path='/cart' element={<CartPage />} />
             <Route path='/account' element={<Account />} />
-            <Route path='/create_post' element={<CreatePost />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </UserContext.Provider>
