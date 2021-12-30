@@ -21,6 +21,7 @@ from django.urls.conf import re_path
 from rest_framework_jwt.views import obtain_jwt_token
 from .views import home
 from community import urls as community_urls
+from trades import urls as listing_urls
 # from rest_framework import routers
 # from community.views import PostViewSet
 
@@ -30,9 +31,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('token-auth/', obtain_jwt_token),
     path('users/', include('users.urls')),
-    # path('api/', include(userRouter.urls)),
-    # path('api/', include(profileRouter.urls)),
     re_path(r'api/', include(community_urls)),
+    re_path(r'api/', include(listing_urls)),
+
 ]
 
 # if settings.DEBUG:

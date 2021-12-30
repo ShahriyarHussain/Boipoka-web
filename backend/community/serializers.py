@@ -11,7 +11,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
 
-    comments = CommentSerializer(many=True, required=False, read_only=True)
+    # comments = CommentSerializer(many=True, required=False, read_only=True)
 
     class Meta:
         model = Post
@@ -23,3 +23,9 @@ class PostSerializer(serializers.ModelSerializer):
         representation['commentCount'] = instance.comments.count()
         representation['author'] = instance.author.username
         return representation
+
+
+class LikesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('liked_by', 'id')

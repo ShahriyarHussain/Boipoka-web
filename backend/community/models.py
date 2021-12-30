@@ -31,6 +31,9 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.author.username} post'
 
+    class Meta:
+        ordering = ['-date_posted']
+
 
 class Post_Comment(models.Model):
     commenter = models.ForeignKey(User, on_delete=models.CASCADE)
