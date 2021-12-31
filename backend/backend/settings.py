@@ -95,7 +95,6 @@ JWT_AUTH = {
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://localhost:8000',
-    'http://localhost:36373',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -184,7 +183,7 @@ LOGIN_REDIRECT_URL = 'home'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MAPBOX_KEY = env('MAP_KEY2')
+# MAPBOX_KEY = env('MAP_KEY2')
 
 DJANGORESIZED_DEFAULT_SIZE = [1280, 720]
 DJANGORESIZED_DEFAULT_QUALITY = 75
