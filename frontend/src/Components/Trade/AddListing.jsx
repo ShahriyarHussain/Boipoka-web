@@ -6,7 +6,7 @@ function AddListing() {
   CheckLogin();
   // const google_books_api_url =
   // "https://www.googleapis.com/books/v1/volumes?q=isbn:";
-  const base_url = "http://127.0.0.1:8000/api/";
+  const url = process.env.REACT_APP_API_URL;
 
   const { userId } = useContext(UserContext);
 
@@ -34,7 +34,7 @@ function AddListing() {
   useEffect(() => {
     const abortController = new AbortController();
     fetch(
-      base_url + "books/",
+      url + "books/",
       {
         headers: {
           Authorization: `JWT ${localStorage.getItem("token")}`,
@@ -54,12 +54,12 @@ function AddListing() {
       .catch((error) => {
         console.log(error);
       });
-  }, [base_url]);
+  }, [url]);
 
   useEffect(() => {
     const abortController = new AbortController();
     fetch(
-      base_url + "authors/",
+      url + "authors/",
       {
         headers: {
           Authorization: `JWT ${localStorage.getItem("token")}`,
@@ -79,7 +79,7 @@ function AddListing() {
       .catch((error) => {
         console.log(error);
       });
-  }, [base_url]);
+  }, [url]);
 
   const bookDetailsHandler = (e) => {
     setBookDetails((previousData) => {

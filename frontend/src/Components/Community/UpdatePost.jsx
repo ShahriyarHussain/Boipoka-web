@@ -7,7 +7,7 @@ import Loader from "../Loaders/Loaders";
 function UpdatePost() {
   CheckLogin();
 
-  const base_url = "http://127.0.0.1:8000/api/posts/";
+  const url = process.env.REACT_APP_API_URL + "posts/";
   const { userId, username } = useContext(UserContext);
   const [isPending, setIsPending] = useState(false);
   const [message, setMessage] = useState("");
@@ -37,7 +37,7 @@ function UpdatePost() {
 
     setTimeout(() => {
       fetch(
-        base_url + id + "/",
+        url + id + "/",
         {
           headers: {
             Authorization: `JWT ${localStorage.getItem("token")}`,
@@ -75,7 +75,7 @@ function UpdatePost() {
     return () => {
       abortController.abort();
     };
-  }, [base_url, id]);
+  }, [url, id]);
 
   const updatePostHandler = () => {
     const postData = {
@@ -87,7 +87,7 @@ function UpdatePost() {
     setIsPending(true);
 
     setTimeout(() => {
-      fetch(base_url + id + "/", {
+      fetch(url + id + "/", {
         method: "PUT",
         headers: {
           "content-type": "application/json",

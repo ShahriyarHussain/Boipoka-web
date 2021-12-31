@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 
 function CheckLogin() {
-  const base_url = "http://127.0.0.1:8000/";
+  const url = process.env.REACT_APP_BASE_URL;
   const { loggedIn, setloggedIn, setUserId, setUsername } =
     useContext(UserContext);
 
@@ -19,7 +19,7 @@ function CheckLogin() {
   useEffect(() => {
     if (!loggedIn) {
       if (localStorage.getItem("token") ? true : false) {
-        fetch(base_url + "users/current_user", {
+        fetch(url + "users/current_user", {
           method: "GET",
           headers: {
             Authorization: `JWT ${localStorage.getItem("token")}`,

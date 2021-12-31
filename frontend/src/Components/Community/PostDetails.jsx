@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const PostDetails = () => {
   CheckLogin();
 
-  const base_url = "http://127.0.0.1:8000/api/posts/";
+  const url = process.env.REACT_APP_API_URL + "posts/";
 
   const { id } = useParams();
   const { username } = useContext(UserContext);
@@ -27,7 +27,7 @@ const PostDetails = () => {
 
     setTimeout(() => {
       fetch(
-        base_url + id + "/",
+        url + id + "/",
         {
           headers: {
             Authorization: `JWT ${localStorage.getItem("token")}`,
@@ -66,7 +66,7 @@ const PostDetails = () => {
     return () => {
       abortController.abort();
     };
-  }, [base_url]);
+  }, [url]);
 
   return (
     <div className='h-auto w-auto ml-20'>

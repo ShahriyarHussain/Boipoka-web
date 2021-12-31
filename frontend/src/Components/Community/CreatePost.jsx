@@ -9,7 +9,7 @@ function CreatePost() {
   console.log(loggedIn);
   CheckLogin();
 
-  const base_url = "http://127.0.0.1:8000/api/posts/";
+  const url = process.env.REACT_APP_API_URL + "posts/";
   const { userId, username } = useContext(UserContext);
   const [isPending, setIsPending] = useState(false);
   const [message, setMessage] = useState("");
@@ -39,7 +39,7 @@ function CreatePost() {
     setIsPending(true);
 
     setTimeout(() => {
-      fetch(base_url, {
+      fetch(url, {
         method: "POST",
         headers: {
           "content-type": "application/json",

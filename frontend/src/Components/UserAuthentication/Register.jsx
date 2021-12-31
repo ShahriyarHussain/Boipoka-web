@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import logo from "../../Assets/boipoka_logo.svg";
 
 function Register() {
-  const base_url = "http://127.0.0.1:8000/";
+  const url = process.env.REACT_APP_BASE_URL;
 
   const [userData, setUserData] = useState({
     firstName: "",
@@ -50,7 +50,7 @@ function Register() {
     }
 
     const { firstName, lastName, username, password } = userData;
-    Axios.post(base_url + "users/users/create", {
+    Axios.post(url + "users/users/create", {
       user: {
         first_name: firstName,
         last_name: lastName,

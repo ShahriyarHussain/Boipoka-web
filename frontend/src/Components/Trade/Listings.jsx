@@ -7,13 +7,13 @@ const Listings = () => {
   CheckLogin();
 
   // let navigate = useNavigate();
-  const base_url = "http://127.0.0.1:8000/api/listings/";
+  const url = process.env.REACT_APP_API_URL + "listings/";
   const [listings, setListings] = useState(null);
 
   useEffect(() => {
     const abortController = new AbortController();
     fetch(
-      base_url,
+      url,
       {
         headers: {
           Authorization: `JWT ${localStorage.getItem("token")}`,

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../Assets/boipoka_logo.svg";
-import CheckLogin from "../../Hooks/CheckLogin";
+// import CheckLogin from "../../Hooks/CheckLogin";
 import { UserContext } from "../../Hooks/UserContext";
 function Login() {
-  const base_url = "http://127.0.0.1:8000/";
+  const url = process.env.REACT_APP_BASE_URL;
 
   const [loginUsername, setLoginUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -12,42 +12,13 @@ function Login() {
   const { setloggedIn, setUserId, setUsername } = useContext(UserContext);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("token") ? true : false) {
-  //     setMessage("Logging In");
-  //     fetch(base_url + "users/current_user", {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: `JWT ${localStorage.getItem("token")}`,
-  //       },
-  //     })
-  //       .then((response) => {
-  //         if (response.status === 200) {
-  //           setMessage("Login Successful");
-  //           setloggedIn(true);
-  //           navigate("/");
-  //           return response.json();
-  //         } else {
-  //           setloggedIn(false);
-  //           setMessage("Session expired, please login again");
-  //           return response.statusText;
-  //         }
-  //       })
-  //       .then((json) => {
-  //         setUserId(json.id);
-  //         setUsername(json.username);
-  //         console.log(json);
-  //       });
-  //   }
-  // }, []);
-
   const loginHandler = (e) => {
     e.preventDefault();
 
     setMessage("Logging in");
     const loginData = { username: loginUsername, password };
     console.log(loginData);
-    fetch(base_url + "token-auth/", {
+    fetch(url + "token-auth/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loginData),

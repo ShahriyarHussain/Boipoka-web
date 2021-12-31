@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Community = () => {
   CheckLogin();
 
-  const base_url = "http://127.0.0.1:8000/api/posts/";
+  const url = process.env.REACT_APP_API_URL + "posts/";
   const [isPending, setIsPending] = useState(false);
   const [posts, setPosts] = useState("");
   const [error, setError] = useState(null);
@@ -21,7 +21,7 @@ const Community = () => {
     const abortController = new AbortController();
     setTimeout(() => {
       fetch(
-        base_url,
+        url,
         {
           headers: {
             Authorization: `JWT ${localStorage.getItem("token")}`,
@@ -61,7 +61,7 @@ const Community = () => {
     return () => {
       abortController.abort();
     };
-  }, [base_url]);
+  }, []);
 
   return (
     <div className='ml-20 mt-4 h-auto w-auto'>

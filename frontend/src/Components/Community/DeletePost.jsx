@@ -4,7 +4,7 @@ import CheckLogin from "../../Hooks/CheckLogin";
 import Loader from "../Loaders/Loaders";
 
 function DeletePost() {
-  const base_url = "http://127.0.0.1:8000/api/posts/";
+  const url = process.env.REACT_APP_API_URL + "posts/";
 
   CheckLogin();
 
@@ -16,7 +16,7 @@ function DeletePost() {
     setIsPending(true);
 
     setTimeout(() => {
-      fetch(base_url + id + "/", {
+      fetch(url + id + "/", {
         method: "DELETE",
         headers: {
           "content-type": "application/json",
