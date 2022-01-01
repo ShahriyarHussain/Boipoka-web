@@ -1,7 +1,9 @@
 # Boipoka-web
 
-The project has been destructured into 2 separate repositories.
+The project has been archived. Please refer to the following to links.
+
 [Frontend with ReactJs](https://github.com/ShahriyarHussain/boipoka-web-reactjs).
+
 [Backend with Djanog Python](https://github.com/ShahriyarHussain/boipoka-web-django).
 
 
