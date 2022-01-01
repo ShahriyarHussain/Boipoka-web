@@ -1,3 +1,11 @@
+# Boipoka-web
+
+The project has been destructured into 2 separate repositories.
+[Frontend with ReactJs](https://github.com/ShahriyarHussain/boipoka-web-reactjs).
+[Backend with Djanog Python](https://github.com/ShahriyarHussain/boipoka-web-django).
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
